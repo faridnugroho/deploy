@@ -35,7 +35,7 @@ function SignIn(props) {
 
       const response = await API.post("/login", props.signIn);
 
-      if (response.data.code == 200) {
+      if (response.data.code === 200) {
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: response.data.data,
