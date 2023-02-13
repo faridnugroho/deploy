@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
-import { API } from "../config/api";
+import { API } from "../../config/api";
 
 function ModalChangePassword(props) {
   const navigate = useNavigate();
@@ -28,8 +28,6 @@ function ModalChangePassword(props) {
       if (password.new_password !== password.confirm_password) {
         return alert("new password and confirmation do not match!!!");
       }
-
-      alert("successfuly change password!"); // navigate("/product-admin");
 
       navigate("/");
     } catch (error) {
