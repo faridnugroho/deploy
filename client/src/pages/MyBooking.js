@@ -94,16 +94,17 @@ function MyBooking() {
         onSuccess: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          history("/profile");
+          history("/booking");
         },
         onPending: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          history("/profile");
+          history("/history");
         },
         onError: function (result) {
           /* You may add your own implementation here */
           console.log(result);
+          history("/history");
         },
         onClose: function () {
           /* You may add your own implementation here */
