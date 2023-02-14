@@ -46,7 +46,7 @@ function Navbars() {
         </div>
         <div className="d-flex align-items-center gap-4 ps-4 pe-5">
           <Image src={iconBooking} />
-          <Link to="/booking" className="text-decoration-none text-black">
+          <Link to="/mybooking" className="text-decoration-none text-black">
             <h5 className="m-0">My Booking</h5>
           </Link>
         </div>

@@ -100,7 +100,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/booking/:id" element={<MyBooking />} />
           <Route path="/history" element={<History />} />
-          <Route path="/booking" element={<Booking />} />
+          <Route path="/mybooking" element={<Booking />} />
         </Route>
 
         <Route path="/owner" element={<PrivateRouteAdmin />}>
