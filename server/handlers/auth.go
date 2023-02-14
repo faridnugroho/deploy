@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	authdto "housy/dto/auth"
@@ -11,9 +12,12 @@ import (
 	"housy/repositories"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -30,7 +34,7 @@ func (h *handlerAuth) Register(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	dataContex := r.Context().Value("dataFile")
-	filename := dataContex.(string)
+	filepath := dataContex.(string)
 
 	roleid, _ := strconv.Atoi(r.FormValue("roleid"))
 	request := authdto.RegisterRequest{
@@ -42,7 +46,6 @@ func (h *handlerAuth) Register(w http.ResponseWriter, r *http.Request) {
 		Gender:   r.FormValue("gender"),
 		Phone:    r.FormValue("phone"),
 		Address:  r.FormValue("address"),
-		Image:    filename,
 	}
 
 	validation := validator.New()
@@ -52,6 +55,18 @@ func (h *handlerAuth) Register(w http.ResponseWriter, r *http.Request) {
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
 		json.NewEncoder(w).Encode(response)
 		return
+	}
+
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "housy"})
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 
 	password, err := bcrypt.HashingPassword(request.Password)
@@ -70,7 +85,7 @@ func (h *handlerAuth) Register(w http.ResponseWriter, r *http.Request) {
 		Gender:   request.Gender,
 		Phone:    request.Phone,
 		Address:  request.Address,
-		Image:    filename,
+		Image:    resp.SecureURL,
 	}
 
 	data, err := h.AuthRepository.Register(user)
