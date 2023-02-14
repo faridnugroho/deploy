@@ -51,10 +51,6 @@ function MyBooking() {
   return (
     <div className="bg-light py-5">
       <Container className="gap-4 d-flex flex-column">
-        {/* <Col key={index} item={item}> */}
-        {/* {item.total} */}
-        {/* </Col> */}
-
         {transactionId?.map((item, index) => (
           <Card key={index}>
             <ListGroup variant="flush">
@@ -87,12 +83,9 @@ function MyBooking() {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex flex-column gap-3">
                     <div style={{ fontSize: "24px", fontWeight: "800" }}>
-                      {/* {data[id - 1].name_property} */}
-                      {/* {houses?.name} */}
                       {item.house.name}
                     </div>
                     <div style={{ fontSize: "14px", width: "282px" }}>
-                      {/* {data[id - 1].address} */}
                       {item.house.address}
                     </div>
                     <div className="ms-3">
