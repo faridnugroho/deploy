@@ -22,6 +22,7 @@ import HistoryIncome from "./pages/owner/HistoryIncome";
 import AddProperty from "./pages/owner/AddProperty";
 
 import { API, setAuthToken } from "./config/api";
+import Booking from "./pages/Booking";
 
 function App() {
   let navigate = useNavigate();
@@ -99,6 +100,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/booking/:id" element={<MyBooking />} />
           <Route path="/history" element={<History />} />
+          <Route path="/booking" element={<Booking />} />
         </Route>
 
         <Route path="/owner" element={<PrivateRouteAdmin />}>
