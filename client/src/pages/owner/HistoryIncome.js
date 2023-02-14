@@ -231,8 +231,7 @@ function HistoryIncome() {
                     >
                       {/* {getDataProfile.fullname} */}
                       {/* {user?.fullname} */}
-                      {/* Farid N */}
-                      {item.user.fullname}
+                      Farid N{/* {item.user.fullname} */}
                     </td>
                     <td
                       style={{
