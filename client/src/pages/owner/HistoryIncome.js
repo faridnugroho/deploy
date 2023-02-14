@@ -27,7 +27,7 @@ import IconNavbar from "../assets/icons/IconNavbar.png";
 import Invoice from "../assets/invoice.png";
 // import Moment from "react-moment";
 
-function IncomingTransaction() {
+function HistoryIncome() {
   // const getData = JSON.parse(localStorage.getItem("Date"));
 
   // const getDataProfile = JSON.parse(localStorage.getItem("SignUp"));
@@ -308,4 +308,4 @@ function IncomingTransaction() {
   );
 }
 
-export default IncomingTransaction;
+export default HistoryIncome;
