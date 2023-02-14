@@ -38,10 +38,10 @@ func (h *handlerhouse) FindHouse(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(err.Error())
 	}
 
-	for i, p := range house {
-		imagePath := os.Getenv("PATH_FILE") + p.Image
-		house[i].Image = imagePath
-	}
+	// for i, p := range house {
+	// 	imagePath := os.Getenv("PATH_FILE") + p.Image
+	// 	house[i].Image = imagePath
+	// }
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: house}
@@ -61,7 +61,7 @@ func (h *handlerhouse) GetHouse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	house.Image = os.Getenv("PATH_FILE") + house.Image
+	// house.Image = os.Getenv("PATH_FILE") + house.Image
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: house}
@@ -136,7 +136,7 @@ func (h *handlerhouse) CreateHouse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, _ = h.HouseRepository.GetHouse(data.ID)
+	// data, _ = h.HouseRepository.GetHouse(data.ID)
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: data}
