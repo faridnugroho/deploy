@@ -253,7 +253,7 @@ const Home = () => {
                     className="position-relative"
                   />
                   <Card.Text className="rounded px-3 py-1 mt-2 ms-2 bg-white position-absolute top-1 start-1 ">
-                    {item.ameneties}
+                    {item.amenities}
                   </Card.Text>
                   <Card.Body className="px-0">
                     <Card.Title className="fw-bold">
