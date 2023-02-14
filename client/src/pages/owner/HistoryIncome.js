@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 
 import { useQuery } from "react-query";
-import { API } from "../config/api";
+import { API } from "../../config/api";
 
 // import convertRupiah from "rupiah-format";
 
