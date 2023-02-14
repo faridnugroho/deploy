@@ -205,7 +205,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {item.user?.fullname}
+                      {item.user.fullname}
                     </td>
                     <td
                       style={{
@@ -213,7 +213,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {item.user?.gender}
+                      {item.user.gender}
                     </td>
                     <td
                       style={{
@@ -221,7 +221,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {item.user?.phone}
+                      {item.user.phone}
                     </td>
                     <td
                       style={{
