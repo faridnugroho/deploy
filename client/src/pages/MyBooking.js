@@ -94,7 +94,7 @@ function MyBooking() {
         onSuccess: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          history("/booking");
+          history("/mybooking");
         },
         onPending: function (result) {
           /* You may add your own implementation here */
