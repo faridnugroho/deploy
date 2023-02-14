@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 
 import convertRupiah from "rupiah-format";
 import Moment from "react-moment";
