@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	housedto "housy/dto/house"
 	dto "housy/dto/result"
 	"housy/models"
@@ -13,6 +14,11 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"gorm.io/datatypes"
+
+	"context"
+
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 )
 
 type handlerhouse struct {
@@ -66,7 +72,7 @@ func (h *handlerhouse) CreateHouse(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	dataContex := r.Context().Value("dataFile")
-	filename := dataContex.(string)
+	filepath := dataContex.(string)
 
 	cityid, _ := strconv.Atoi(r.FormValue("cityid"))
 	userid, _ := strconv.Atoi(r.FormValue("userid"))
@@ -80,7 +86,6 @@ func (h *handlerhouse) CreateHouse(w http.ResponseWriter, r *http.Request) {
 		Sqf:         r.FormValue("sqf"),
 		Description: r.FormValue("description"),
 		Address:     r.FormValue("address"),
-		Image:       filename,
 		CityID:      cityid,
 		UserID:      userid,
 	}
@@ -92,6 +97,18 @@ func (h *handlerhouse) CreateHouse(w http.ResponseWriter, r *http.Request) {
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
 		json.NewEncoder(w).Encode(response)
 		return
+	}
+
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "dumbmerch"})
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 
 	house := models.House{
@@ -108,7 +125,7 @@ func (h *handlerhouse) CreateHouse(w http.ResponseWriter, r *http.Request) {
 		Sqf:         request.Sqf,
 		Description: request.Description,
 		Address:     request.Address,
-		Image:       filename,
+		Image:       resp.SecureURL,
 	}
 
 	data, err := h.HouseRepository.CreateHouse(house)
