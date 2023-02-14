@@ -15,16 +15,10 @@ import {
 import { useQuery } from "react-query";
 import { API } from "../../config/api";
 
-// import convertRupiah from "rupiah-format";
-
-// import { useParams } from "react-router-dom";
-
 import IconNavbar from "../../assets/icons/IconNavbar.png";
 import Invoice from "../../assets/invoice.png";
-// import Moment from "react-moment";
 
 function HistoryIncome() {
-  // Fetching data user from database
   const { data: transaction } = useQuery("transactionCache", async () => {
     const response = await API.get("/transaction");
     return response.data.data;
