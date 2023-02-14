@@ -19,8 +19,8 @@ import { API } from "../../config/api";
 
 // import { useParams } from "react-router-dom";
 
-import IconNavbar from "../assets/icons/IconNavbar.png";
-import Invoice from "../assets/invoice.png";
+import IconNavbar from "../../assets/icons/IconNavbar.png";
+import Invoice from "../../assets/invoice.png";
 // import Moment from "react-moment";
 
 function HistoryIncome() {
