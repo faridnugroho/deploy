@@ -97,7 +97,7 @@ function MyBooking() {
                     </div>
                     <div className="ms-3">
                       <Badge bg="success" className="rounded-0">
-                        {item.house.status}
+                        {item.status}
                       </Badge>
                     </div>
                   </div>
