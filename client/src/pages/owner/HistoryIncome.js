@@ -15,31 +15,15 @@ import {
 import { useQuery } from "react-query";
 import { API } from "../config/api";
 
-import jwt from "jwt-decode";
-
 // import convertRupiah from "rupiah-format";
 
 // import { useParams } from "react-router-dom";
-
-// import data from "../components/data/homes";
 
 import IconNavbar from "../assets/icons/IconNavbar.png";
 import Invoice from "../assets/invoice.png";
 // import Moment from "react-moment";
 
 function HistoryIncome() {
-  // const getData = JSON.parse(localStorage.getItem("Date"));
-
-  // const getDataProfile = JSON.parse(localStorage.getItem("SignUp"));
-
-  // const date = new Date();
-
-  const getToken = localStorage.getItem("token");
-
-  const hasilDecode = jwt(getToken);
-
-  console.log("hasil decode", hasilDecode.id);
-
   // Fetching data user from database
   const { data: transaction } = useQuery("transactionCache", async () => {
     const response = await API.get("/transaction");
@@ -51,10 +35,6 @@ function HistoryIncome() {
   return (
     <div className="bg-light py-5">
       <Container className="gap-4 d-flex flex-column">
-        {/* <Col key={index} item={item}> */}
-        {/* {item.total} */}
-        {/* </Col> */}
-
         {transaction?.map((item, index) => (
           <Card key={index}>
             <ListGroup variant="flush">
@@ -229,9 +209,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.fullname} */}
-                      {/* {user?.fullname} */}
-                      Farid N{/* {item.user.fullname} */}
+                      Farid N
                     </td>
                     <td
                       style={{
