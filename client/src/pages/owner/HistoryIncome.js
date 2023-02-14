@@ -67,12 +67,9 @@ function HistoryIncome() {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex flex-column gap-3">
                     <div style={{ fontSize: "24px", fontWeight: "800" }}>
-                      {/* {data[id - 1].name_property} */}
-                      {/* {houses?.name} */}
                       {item.house.name}
                     </div>
                     <div style={{ fontSize: "14px", width: "282px" }}>
-                      {/* {data[id - 1].address} */}
                       {item.house.address}
                     </div>
                     <div className="ms-3">
@@ -145,7 +142,6 @@ function HistoryIncome() {
                           color: "#959595",
                         }}
                       >
-                        {/* {data[id - 1].rent} */}
                         {item.house.rent}
                       </div>
                     </div>
@@ -217,8 +213,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.gender} */}
-                      {item.user.gender}
+                      Male
                     </td>
                     <td
                       style={{
@@ -226,8 +221,7 @@ function HistoryIncome() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.phone} */}
-                      {item.user.phone}
+                      086353674837
                     </td>
                     <td
                       style={{
