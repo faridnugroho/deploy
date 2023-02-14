@@ -158,7 +158,6 @@ function MyBooking() {
                           color: "#959595",
                         }}
                       >
-                        {/* {data[id - 1].rent} */}
                         {item.house.rent}
                       </div>
                     </div>
@@ -222,9 +221,6 @@ function MyBooking() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.fullname} */}
-                      {/* {user?.fullname} */}
-                      {/* Farid N */}
                       {item.user.fullname}
                     </td>
                     <td
@@ -233,7 +229,6 @@ function MyBooking() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.gender} */}
                       {item.user.gender}
                     </td>
                     <td
@@ -242,7 +237,6 @@ function MyBooking() {
                         color: "#B1B1B1",
                       }}
                     >
-                      {/* {getDataProfile.phone} */}
                       {item.user.phone}
                     </td>
                     <td
