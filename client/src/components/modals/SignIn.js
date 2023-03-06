@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useMutation } from "react-query";
@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 
 function SignIn(props) {
   const handleClose = () => props.setSignInShow(false);
+  const [message, setMessage] = useState(null);
 
   const [state, dispatch] = useContext(UserContext);
   console.log(state);
@@ -28,7 +29,6 @@ function SignIn(props) {
 
   const navigate = useNavigate();
 
-  // Create function for handle insert data process with useMutation here ...
   const handleLogin = useMutation(async (e) => {
     try {
       e.preventDefault();
@@ -39,14 +39,6 @@ function SignIn(props) {
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: response.data.data,
-        });
-        console.log("responseeee", response);
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "You have successfully logged in",
-          showConfirmButton: false,
-          timer: 1500,
         });
 
         props.setSignInShow(false);
@@ -63,12 +55,12 @@ function SignIn(props) {
         });
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Username or Password went wrong",
-      });
-      console.log(error);
+      const alert = (
+        <Alert variant="danger" className="py-1">
+          Either password or user name incorrect
+        </Alert>
+      );
+      setMessage(alert);
       props.setSignInShow(true);
     }
   });
@@ -102,12 +94,9 @@ function SignIn(props) {
                 onChange={handleChange}
               />
             </Form.Group>
+            {message}
             <Form.Group className="d-flex gap-3 flex-column text-center">
-              <Button
-                variant="primary w-100"
-                type="submit"
-                // onClick={handleClose}
-              >
+              <Button variant="primary w-100" type="submit">
                 Sign in
               </Button>
               <Form.Group className="d-flex justify-content-center gap-1">

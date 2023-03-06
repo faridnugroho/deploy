@@ -15,7 +15,6 @@ const reducer = (state, action) => {
     case "LOGIN_SUCCESS":
       localStorage.setItem("token", payload.token);
       localStorage.setItem("role", payload.role.name);
-      console.log("ini payload", payload);
       return {
         isLogin: true,
         user: payload,

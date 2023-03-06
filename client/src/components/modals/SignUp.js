@@ -34,7 +34,6 @@ function SignUp(props) {
 
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
-      console.log("blob image", url);
       setPreview(url);
     }
   };
@@ -55,7 +54,7 @@ function SignUp(props) {
       formData.append("image", signUp.image[0]);
 
       const response = await API.post("/register", formData);
-      console.log("berhasil menambahkan user", response);
+      console.log("Success Add User", response);
 
       signUp.roleid = "";
       signUp.fullname = "";
@@ -69,14 +68,6 @@ function SignUp(props) {
 
       props.setSignUpShow(false);
       props.setSignInShow(true);
-
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "User has been saved",
-        showConfirmButton: false,
-        timer: 1500,
-      });
 
       signUp.fullname = "";
       signUp.username = "";
@@ -93,13 +84,11 @@ function SignUp(props) {
         title: "Oops...",
         text: "User failed to save",
       });
-      console.log(error);
     }
   });
 
   let { data: roles } = useQuery("rolesCache", async () => {
     const response = await API.get("/roles");
-    // console.log(response);
     return response.data.data;
   });
 

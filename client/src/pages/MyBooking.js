@@ -18,21 +18,12 @@ import {
   Table,
 } from "react-bootstrap";
 
-// import { useParams } from "react-router-dom";
-
-// import data from "../components/data/homes";
-
 import IconNavbar from "../assets/icons/IconNavbar.png";
 import Moment from "react-moment";
-// import ModalAfterBooking from "../components/modals/ModalAfterBooking";
 import { useNavigate, useParams } from "react-router-dom";
 
 function MyBooking() {
   const getData = JSON.parse(localStorage.getItem("Date"));
-
-  console.log("ini checkin", typeof getData.checkin);
-
-  // const getDataProfile = JSON.parse(localStorage.getItem("SignUp"));
 
   let history = useNavigate();
 
@@ -41,19 +32,10 @@ function MyBooking() {
 
   const { id } = useParams();
 
-  // Fetching data user from database
   const { data: user } = useQuery("userCache", async () => {
     const response = await API.get("/user/" + hasilDecode.id);
-    console.log("ini response user", response);
     return response.data.data;
   });
-
-  // Fetching data house from database
-  // const { data: house } = useQuery("houseCache", async () => {
-  //   const response = await API.get("/house/" + id);
-  //   console.log("ini response house", response);
-  //   return response.data.data;
-  // });
 
   let { data: house, refetch } = useQuery("houseCache", async () => {
     const config = {
@@ -63,8 +45,7 @@ function MyBooking() {
       },
     };
     const response = await API.get("/house/" + id, config);
-    console.log("data response test", response);
-    console.log("data refetch test", refetch);
+    console.log("refetch data", refetch);
     return response.data.data;
   });
 
@@ -85,29 +66,21 @@ function MyBooking() {
       });
 
       const tokenBaru = response.data.data.token;
-      console.log(
-        "habis add transaction tokennnnnn : ",
-        response.data.data.token
-      );
 
       window.snap.pay(tokenBaru, {
         onSuccess: function (result) {
-          /* You may add your own implementation here */
           console.log(result);
           history("/mybooking");
         },
         onPending: function (result) {
-          /* You may add your own implementation here */
           console.log(result);
           history("/history");
         },
         onError: function (result) {
-          /* You may add your own implementation here */
           console.log(result);
           history("/history");
         },
         onClose: function () {
-          /* You may add your own implementation here */
           alert("you closed the popup without finishing the payment");
         },
       });
@@ -120,7 +93,7 @@ function MyBooking() {
     //change this to the script source you want to load, for example this is snap.js sandbox env
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     //change this according to your client-key
-    const myMidtransClientKey = "SB-Mid-client-kcBD2UV-NpQHxEFw";
+    const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;

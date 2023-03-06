@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { API } from "../../config/api";
+import Swal from "sweetalert2";
 
 function ModalChangePassword(props) {
   const navigate = useNavigate();
@@ -21,17 +22,42 @@ function ModalChangePassword(props) {
 
   const handleSubmit = useMutation(async (e) => {
     try {
-      e.preventDefault(); // Insert product data
+      e.preventDefault();
+
       const response = await API.patch("/changepassword", password);
-      console.log("SUCCESS CHANGE PASSWORD", response.data);
+      console.log("Success Change Password", response.data);
 
       if (password.new_password !== password.confirm_password) {
-        return alert("new password and confirmation do not match!!!");
+        return Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Oops...",
+          text: "New password and confirmation do not match",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-
-      navigate("/");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Success",
+        text: "You have successfully change password",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/profile");
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to change the password",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   });
   return (

@@ -677,30 +677,3 @@ func (h *handlertransaction) FindTransactionByID(w http.ResponseWriter, r *http.
 	response := dto.SuccessResult{Code: http.StatusOK, Data: transaction}
 	json.NewEncoder(w).Encode(response)
 }
-
-// func (h *handlertransaction) FindTransactionOwner(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
-
-// 	// userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
-// 	// userId := int(userInfo["id"].(float64))
-
-// 	// transactions := models.Transaction{
-// 	// 	House: models.House{
-// 	// 		UserID: userId,
-// 	// 	},
-// 	// }
-// 	// houseId, _ := strconv.Atoi(mux.Vars(r)["houseid"])
-
-// 	userID, _ := strconv.Atoi(mux.Vars(r)["user_id"])
-
-// 	transaction, err := h.TransactionRepository.FindTransactionOwner(userID)
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusInternalServerError)
-// 		json.NewEncoder(w).Encode(err.Error())
-// 	}
-// 	fmt.Println(transaction)
-
-// 	w.WriteHeader(http.StatusOK)
-// 	response := dto.SuccessResult{Code: http.StatusOK, Data: transaction}
-// 	json.NewEncoder(w).Encode(response)
-// }

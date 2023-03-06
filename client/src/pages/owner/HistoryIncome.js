@@ -24,8 +24,6 @@ function HistoryIncome() {
     return response.data.data;
   });
 
-  console.log("ini transaction", transaction);
-
   return (
     <div className="bg-light py-5">
       <Container className="gap-4 d-flex flex-column">

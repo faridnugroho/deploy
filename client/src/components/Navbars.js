@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -21,8 +21,11 @@ import iconLogout from "../assets/icons/IconLogout.png";
 import iconAddProperty from "../assets/icons/AddProperty.png";
 import SignIn from "./modals/SignIn";
 import SignUp from "./modals/SignUp";
+import { RoomsContext } from "../context/roomsContext";
 
 function Navbars() {
+  const { handleChange, handleOnSubmit } = useContext(RoomsContext);
+
   const [signInShow, setSignInShow] = React.useState(false);
   const [signUpShow, setSignUpShow] = React.useState(false);
 
@@ -145,15 +148,17 @@ function Navbars() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto">
-          <Form className="d-flex bg-light">
+          <Form className="d-flex bg-light" onSubmit={handleOnSubmit}>
             <Form.Control
               type="search"
+              onChange={handleChange}
+              name="name"
               placeholder="Search..."
               className="rounded-0 border-0 border-end bg-light ps-3"
               aria-label="Search"
               style={{ width: "18rem" }}
             />
-            <Button variant="rounded-0">
+            <Button variant="rounded-0" type="submit">
               <Image src={iconSearch} />
             </Button>
           </Form>

@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Button, Card, Container, Image, Form, Modal } from "react-bootstrap";
-
+import React, { useState } from "react";
+import { Button, Card, Container, Image, Form } from "react-bootstrap";
 import jwt from "jwt-decode";
-
 import ModalChangePassword from "../components/modals/ModalChangePassword";
-
 import IconProfile from "../assets/icons/IconProfile.png";
 import IconEnvelope from "../assets/icons/IconEnvelope.png";
 import IconLock from "../assets/icons/IconLock.png";
@@ -12,11 +9,10 @@ import IconHome from "../assets/icons/IconHome.png";
 import IconGender from "../assets/icons/IconGender.png";
 import IconPhone from "../assets/icons/IconPhone.png";
 import IconLocation from "../assets/icons/IconLocation.png";
-
 import { useQuery } from "react-query";
 import { API } from "../config/api";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const styles = {
   Cursor: {
@@ -24,50 +20,15 @@ const styles = {
   },
 };
 
-function Profile(props) {
-  const navigate = useNavigate();
-  const [password, setPassword] = useState({
-    old_password: "",
-    new_password: "",
-    confirm_password: "",
-  });
-
-  const handlerPassword = (e) => {
-    setPassword({
-      ...password,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault(); // Insert product data
-      const response = await API.patch("/changepassword", password);
-      console.log("SUCCESS CHANGE PASSWORD", response.data);
-
-      if (password.new_password !== password.confirm_password) {
-        return alert("new password and confirmation do not match!!!");
-      }
-
-      alert("successfuly change password!"); // navigate("/product-admin");
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  });
+function Profile() {
   const [modalShow, setModalShow] = React.useState(false);
 
   const getToken = localStorage.getItem("token");
 
   const hasilDecode = jwt(getToken);
 
-  // console.log(hasilDecode.id);
-
-  // Fetching data from database
   const { data: user, refetch } = useQuery("userCache", async () => {
     const response = await API.get("/user/" + hasilDecode.id);
-    console.log("ini response nyaa", response);
     return response.data.data;
   });
 
@@ -84,7 +45,7 @@ function Profile(props) {
 
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
-      console.log("blob image", url);
+      console.log("data url", url);
     }
   };
 
@@ -98,23 +59,35 @@ function Profile(props) {
       }
 
       const response = await API.patch("/user/" + hasilDecode.id, formData);
-      console.log("berhasil mengubah photo profile", response);
 
-      photo.image = "";
+      photo.image.value = "";
       refetch();
+
+      Swal.fire(
+        {
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Success",
+          text: "You have successfully change photo profile",
+          showConfirmButton: false,
+          timer: 1500,
+        },
+        response
+      );
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Oops...",
+        text: "Failed change photo profile",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   });
 
-  useEffect(() => {
-    if (photo) {
-      return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [photo]);
-
-  console.log("ini data usernya", user);
   return (
     <div className="bg-light py-5">
       <Container className="d-flex justify-content-center">
@@ -199,23 +172,16 @@ function Profile(props) {
             </div>
             <div>
               <Card style={{ width: "18rem" }}>
-                {localStorage.getItem("role") === "Tenant" ? (
-                  <Card.Img variant="top" src={user?.image} />
-                ) : (
-                  <Card.Img
-                    variant="top"
-                    style={{
-                      maxWidth: "18rem",
-                      minHeight: "18rem",
-                      objectFit: "cover",
-                    }}
-                    src={user?.image}
-                  />
-                )}
+                <Card.Img
+                  variant="top"
+                  style={{
+                    maxWidth: "18rem",
+                    minHeight: "18rem",
+                    objectFit: "cover",
+                  }}
+                  src={user?.image}
+                />
               </Card>
-              {/* <Button className="btn btn-primary mt-2 w-100">
-                Change Photo Profile
-              </Button> */}
               <Form
                 onSubmit={(e) => handleUpdate.mutate(e)}
                 className="mt-2 w-100"
@@ -248,57 +214,6 @@ function Profile(props) {
           </Card.Body>
         </Card>
       </Container>
-      <Modal
-        {...props}
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Body className="p-5">
-          <Form onSubmit={(e) => handleSubmit.mutate(e)}>
-            <Modal.Title className="text-center mb-4">
-              Change Password
-            </Modal.Title>
-            <Form.Group className="mb-3">
-              <Form.Label>Old Password</Form.Label>
-              <Form.Control
-                onChange={handlerPassword}
-                id="old_pasword"
-                type="password"
-                placeholder="Old Password"
-                name="old_password"
-                value={password.old_password}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control
-                onChange={handlerPassword}
-                type="password"
-                placeholder="New Password"
-                name="new_password"
-                value={password.new_password}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                onChange={handlerPassword}
-                type="password"
-                placeholder="Confirm Password"
-                name="confirm_password"
-                value={password.confirm_password}
-                autoFocus
-              />
-            </Form.Group>
-            <Button className="bg-primary w-100 mt-4" type="submit">
-              Save
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 }

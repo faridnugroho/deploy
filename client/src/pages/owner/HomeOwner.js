@@ -24,16 +24,14 @@ const IncomingTransaction = () => {
 
   const date = new Date();
 
-  // Fetching data from database
   let { data: transaction } = useQuery("transactionCache", async () => {
     const response = await API.get("/transaction");
-    console.log(response);
     return response.data.data;
   });
 
   return (
     <>
-      <div className="bg-light py-5">
+      <div className="bg-light py-5 min-vh-100">
         <Container>
           <h2 className="mb-3">Incoming Transaction</h2>
           <Table responsive striped hover>

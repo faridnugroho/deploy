@@ -26,7 +26,6 @@ function DetailProperty() {
 
   let { data: house } = useQuery("houseCache", async () => {
     const response = await API.get("/house/" + id);
-    console.log(response);
     return response.data.data;
   });
 

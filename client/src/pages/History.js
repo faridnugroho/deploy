@@ -15,38 +15,14 @@ import {
 import { useQuery } from "react-query";
 import { API } from "../config/api";
 
-import jwt from "jwt-decode";
-
-// import convertRupiah from "rupiah-format";
-
-// import { useParams } from "react-router-dom";
-
-// import data from "../components/data/homes";
-
 import IconNavbar from "../assets/icons/IconNavbar.png";
 import Invoice from "../assets/invoice.png";
-// import Moment from "react-moment";
 
 function MyBooking() {
-  // const getData = JSON.parse(localStorage.getItem("Date"));
-
-  // const getDataProfile = JSON.parse(localStorage.getItem("SignUp"));
-
-  // const date = new Date();
-
-  const getToken = localStorage.getItem("token");
-
-  const hasilDecode = jwt(getToken);
-
-  console.log("hasil decode", hasilDecode.id);
-
-  // Fetching data user from database
   const { data: transactionId } = useQuery("transactionIdCache", async () => {
     const response = await API.get("/transactionId");
     return response.data.data;
   });
-
-  console.log("ini transaction", transactionId);
 
   return (
     <div className="bg-light py-5">

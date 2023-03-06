@@ -13,11 +13,9 @@ import { useNavigate } from "react-router-dom";
 function AddProperty() {
   const getToken = localStorage.getItem("token");
   const hasilDecode = jwt(getToken);
-  console.log("ini hasilDecode", hasilDecode.id);
-  console.log("ini tipe hasilDecode", typeof hasilDecode.id);
 
   const navigate = useNavigate();
-  const [preview, setPreview] = useState(null); //For image preview
+  const [preview, setPreview] = useState(null);
   const [addProperty, setAddProperty] = useState({
     image: "",
     name: "",
@@ -52,10 +50,8 @@ function AddProperty() {
 
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
-      console.log("blob image", url);
       setPreview(url);
     }
-    console.log(e.target.name, e.target.value);
   };
 
   const handleAddProperty = useMutation(async (e) => {
@@ -77,7 +73,6 @@ function AddProperty() {
       formData.append("description", addProperty.description);
 
       const response = await API.post("/house", formData);
-      console.log("berhasil menambahkan house", response);
 
       addProperty.image = "";
       addProperty.name = "";
@@ -92,11 +87,19 @@ function AddProperty() {
       addProperty.sqf = "";
       addProperty.description = "";
 
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Property has been saved",
-      });
+      Swal.fire(
+        {
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Success",
+          text: "Property has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        },
+        response
+      );
+
       navigate(`/`);
     } catch (error) {
       Swal.fire({
@@ -104,13 +107,11 @@ function AddProperty() {
         title: "Oops...",
         text: "Property failed to save",
       });
-      console.log(error);
     }
   });
 
   let { data: cities } = useQuery("citiesCache", async () => {
     const response = await API.get("/cities");
-    // console.log(response);
     return response.data.data;
   });
 
